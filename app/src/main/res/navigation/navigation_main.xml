@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/contentSharing">
+
+
+    <fragment
+        android:id="@+id/contentSharing"
+        tools:layout="@layout/fragment_content_sharing"
+        android:name="com.voleti.extremeshare.ui.fragments.ContentSharing"
+        android:label="ContentSharing" >
+        <action
+            android:id="@+id/action_contentSharing_to_sendExplorerActivity"
+            app:destination="@id/sendExplorerActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/sendExplorerActivity"
+        tools:layout="@layout/activity_send_explorer"
+        android:name="com.voleti.extremeshare.ui.activities.SendExplorerActivity"
+        android:label="SendExplorerActivity" />
+</navigation>
