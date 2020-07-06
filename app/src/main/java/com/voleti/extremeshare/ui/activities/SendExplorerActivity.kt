@@ -18,7 +18,7 @@ class SendExplorerActivity: AppCompatActivity(R.layout.activity_send_explorer) {
             }
 
             override fun createFragment(position: Int): Fragment {
-                return DynamicRecycleView()
+                return Fragment()
             }
         }
     }
