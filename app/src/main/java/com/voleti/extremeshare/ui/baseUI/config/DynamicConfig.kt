@@ -5,10 +5,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.voleti.extremeshare.ui.baseUI.BaseModelImpl
 
-abstract class DynamicConfig<D:BaseModelImpl,B:BaseModelImpl>:BaseConfig<B>(){
-    val subData = mutableListOf<D>()
+abstract class DynamicConfig: BaseConfig() {
+    val subData = mutableListOf<BaseModelImpl>()
 
-    fun  offerSubData(item:D){
+    fun  offerSubData(item:BaseModelImpl){
         subData.add(item)
     }
     abstract fun subLayoutManager(context: Context?): RecyclerView.LayoutManager

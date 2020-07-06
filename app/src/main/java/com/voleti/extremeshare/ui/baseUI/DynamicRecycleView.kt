@@ -1,10 +1,11 @@
 package com.voleti.extremeshare.ui.baseUI
 
 import androidx.databinding.ViewDataBinding
+import com.voleti.extremeshare.ui.baseUI.config.BaseConfig
 import com.voleti.extremeshare.ui.baseUI.config.DynamicConfig
 
 
-class DynamicRecycleView(private val dynamicConfig: DynamicConfig<BaseModelImpl,BaseModelImpl>):BaseFragment(dynamicConfig) {
+class DynamicRecycleView(private val dynamicConfig: DynamicConfig):BaseFragment(dynamicConfig) {
     companion object{
        const val mainView = 0
        const val subview = 1
@@ -31,7 +32,7 @@ class DynamicRecycleView(private val dynamicConfig: DynamicConfig<BaseModelImpl,
 
     override fun itemViewType(position: Int): Int {
         if(currentView == subview)
-            return itemViewType(position)
+            return dynamicConfig.subViewType(position)
         return super.itemViewType(position)
     }
 

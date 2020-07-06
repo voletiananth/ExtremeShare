@@ -9,14 +9,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.voleti.extremeshare.R
 import com.voleti.extremeshare.ui.baseUI.config.BaseConfig
+
 import kotlinx.android.synthetic.main.base_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-open class BaseFragment(private val config:BaseConfig<BaseModelImpl>):Fragment() {
+open class BaseFragment(private val config: BaseConfig):Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
