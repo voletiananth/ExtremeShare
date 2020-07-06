@@ -1,11 +1,13 @@
 package com.voleti.extremeshare.ui.baseUI.config
 
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.voleti.extremeshare.ui.baseUI.BaseModelImpl
+import kotlinx.coroutines.CoroutineScope
 
 abstract class BaseConfig< M:BaseModelImpl > {
     companion object{
@@ -21,7 +23,7 @@ abstract class BaseConfig< M:BaseModelImpl > {
     open val selectionArgs:Array<String>? = null
     open val selectOrder:String? = null
 
-    abstract fun loadCursor()
+    abstract fun loadCursor(coroutineScope: CoroutineScope,cursor: Cursor)
 
     protected fun offerMainData(item:M){
         mainData.add(item)
