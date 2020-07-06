@@ -10,6 +10,8 @@ class DynamicRecycleView(private val dynamicConfig: DynamicConfig<BaseModelImpl,
        const val subview = 1
     }
 
+
+
     private var currentView = mainView
 
 

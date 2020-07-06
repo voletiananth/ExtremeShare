@@ -63,6 +63,8 @@ open class BaseFragment(private val config:BaseConfig<BaseModelImpl>):Fragment()
                     false)
             )
 
+
+
             override fun getItemCount(): Int = this@BaseFragment.itemCount()
 
             override fun onBindViewHolder(holder: MyHolder, position: Int) {
