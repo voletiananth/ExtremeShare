@@ -3,7 +3,7 @@
     <data>
         <variable
             name="header"
-            type="String" />
+            type="com.voleti.extremeshare.ui.dataModels.Header" />
 
     </data>
 
@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toStartOf="@id/radioButton"
             android:layout_width="0dp"
             android:gravity="center_vertical"
-            android:text="@{header}"
+            android:text="@{header.header}"
             app:layout_constraintTop_toTopOf="@id/radioButton"
             app:layout_constraintBottom_toBottomOf="@id/radioButton"
             app:layout_constraintStart_toStartOf="parent"

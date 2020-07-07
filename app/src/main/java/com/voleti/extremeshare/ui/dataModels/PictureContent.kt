@@ -1,4 +1,4 @@
-package com.voleti.extremeshare.ui.datamodels
+package com.voleti.extremeshare.ui.dataModels
 
 import android.net.Uri
 import com.voleti.extremeshare.ui.baseUI.BaseModelImpl

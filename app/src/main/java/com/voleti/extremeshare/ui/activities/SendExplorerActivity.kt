@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.voleti.extremeshare.R
-import com.voleti.extremeshare.ui.baseUI.DynamicRecycleView
 import kotlinx.android.synthetic.main.activity_send_explorer.*
 
 class SendExplorerActivity: AppCompatActivity(R.layout.activity_send_explorer) {

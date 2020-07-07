@@ -11,10 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.voleti.extremeshare.R
 import com.voleti.extremeshare.ui.baseUI.config.BaseConfig
-
 import kotlinx.android.synthetic.main.base_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 open class BaseFragment(private val config: BaseConfig):Fragment() {
 
@@ -30,25 +27,17 @@ open class BaseFragment(private val config: BaseConfig):Fragment() {
     var tabName = 0
 
     fun getTabName(block:(tabName:String)->Unit){
-        loadData()
         block(tabName.toString())
     }
 
-
-
-    private fun loadData(){
-        config.run { context?.contentResolver?.query(contentUri,projection,selection,selectionArgs,selectOrder) }?.apply {
-            tabName = count
-            lifecycleScope.launch(Dispatchers.IO) {
-                if (moveToFirst()){
-                    do{
-                        config.loadCursor(this,this@apply)
-                    }while (moveToNext())
-                }
-            }
-        }
-
+    fun build():BaseFragment{
+        config.fetchData(lifecycleScope,context)
+        return this
     }
+
+
+
+
 
     private fun initComponents(){
 
@@ -69,6 +58,7 @@ open class BaseFragment(private val config: BaseConfig):Fragment() {
 
             override fun onBindViewHolder(holder: MyHolder, position: Int) {
                bind(holder.viewBinding,position)
+                holder.viewBinding.executePendingBindings()
             }
 
             override fun getItemViewType(position: Int): Int {
@@ -81,7 +71,7 @@ open class BaseFragment(private val config: BaseConfig):Fragment() {
     }
     open fun itemCount() = config.mainData.size
 
-    open fun bind(viewBinding: ViewDataBinding,position: Int)  = config.mainBind(viewBinding, position)
+    open fun bind(viewBinding: ViewDataBinding,position: Int) = config.mainBind(viewBinding, position)
 
 
     open fun itemViewType(position:Int):Int = config.mainViewType(position)
