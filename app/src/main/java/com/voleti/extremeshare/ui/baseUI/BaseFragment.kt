@@ -38,6 +38,8 @@ open class BaseFragment(private val config: BaseConfig):Fragment() {
 
 
 
+
+
     private fun initComponents(){
 
         baseRecycleView.layoutManager = config.mainLayoutManager(context)

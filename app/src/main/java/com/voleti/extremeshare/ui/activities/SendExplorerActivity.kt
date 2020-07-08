@@ -14,6 +14,10 @@ class SendExplorerActivity: AppCompatActivity(R.layout.activity_send_explorer) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
         viewPager.adapter = object :FragmentStateAdapter(this){
             override fun getItemCount(): Int {
                 return tabNames.size

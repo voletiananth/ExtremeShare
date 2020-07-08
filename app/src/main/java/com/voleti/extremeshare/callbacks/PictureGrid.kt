@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.text.format.DateUtils
+import android.util.Log
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,20 +60,25 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
     }
 
 
-    override fun fetchData(lifecycleScope: CoroutineScope, context: Context?) {
+    override fun fetchData(lifecycleScope: CoroutineScope, context: Context) {
 
         lifecycleScope.launch {
-            context?.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            context.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 arrayOf(MediaStore.Images.Media._ID,MediaStore.Images.Media.DATE_MODIFIED),
                 null,
                 null,
                 "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
             )?.apply {
-                tabName(count)
-                if (moveToNext()){
+                tabName(this.count)
+
+                if (moveToFirst()){
+                    Log.i("voletiananth",columnNames.joinToString())
                     do {
+
                         val id = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,getLong(getColumnIndex(MediaStore.Images.Media._ID)).toString())
+
                         val date =  DateUtils.formatDateTime(context,getLong(getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)),DateUtils.FORMAT_NO_MONTH_DAY)
+
                         tempData.put(date, PictureContent(contentType,id))
 
                     }while (moveToNext())

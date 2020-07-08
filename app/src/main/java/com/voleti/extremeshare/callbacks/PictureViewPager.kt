@@ -7,9 +7,9 @@ import com.voleti.extremeshare.ui.baseUI.config.BaseViewPagerConfig
 
 class PictureViewPager:BaseViewPagerConfig(){
     override fun createFragment(position: Int,tab:(name:String,tabPosition:Int)->Unit): Fragment {
-        tab("1",0)
-        return DynamicRecycleView(PictureGrid(){
 
+        return DynamicRecycleView(PictureGrid(){
+            tab(it.toString(),0)
         })
     }
 

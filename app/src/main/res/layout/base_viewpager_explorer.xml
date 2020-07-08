@@ -19,13 +19,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingLeft="25dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:paddingRight="25dp"
         android:layout_height="wrap_content">
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             app:tabMode="fixed"
             app:tabInlineLabel="true"
+            app:tabIndicatorHeight="?attr/actionBarSize"
             android:id="@+id/tabLayout"
             android:layout_height="wrap_content">
 

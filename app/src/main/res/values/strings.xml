@@ -2,4 +2,10 @@
     <string name="app_name">ExtremeShare</string>
     <string name="receive">Receive</string>
     <string name="send">Send</string>
+    <string name="btn_setting">Setting</string>
+    <string name="btn_ask">ask</string>
+    <string name="btn_reject">reject</string>
+    <string name="requestPermissionStorage">Storage Permission</string>
+    <string name="requestPermissionStorageSummary">This permission allows this application to read and write to your device\'s storage for receiving and sharing files.
+    </string><!-- Change at Production   -->
 </resources>

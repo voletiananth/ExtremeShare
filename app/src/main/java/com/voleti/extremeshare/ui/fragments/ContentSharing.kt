@@ -21,6 +21,7 @@ class ContentSharing: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         btnSend.setOnClickListener {
+
             findNavController().navigate(R.id.action_contentSharing_to_sendExplorerActivity)
         }
     }
