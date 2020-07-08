@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.voleti.extremeshare.ui.baseUI.BaseModelImpl
 import kotlinx.coroutines.CoroutineScope
 
-abstract class BaseConfig {
+abstract class BaseConfig(val tabName:(Int)->Unit){
     companion object{
         const val headerType = 0
         const val contentType = 1
             }
+
 
   val mainData = mutableListOf<BaseModelImpl>()
   abstract fun mainLayoutManager(context: Context?):RecyclerView.LayoutManager

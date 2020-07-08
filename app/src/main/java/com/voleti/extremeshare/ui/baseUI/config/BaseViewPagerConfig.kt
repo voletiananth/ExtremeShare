@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseViewPagerConfig {
 
-    abstract fun createFragment(position:Int):Fragment
-    val tabNames = mutableListOf<String>()
-    val tabIcons = mutableListOf<Int>()
+    abstract fun createFragment(position:Int,tab:(name:String,tabPosition:Int)->Unit):Fragment
+     abstract val itemCount:Int
+   abstract val tabIcons:Array<Int>
 
 }

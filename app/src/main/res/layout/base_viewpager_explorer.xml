@@ -24,8 +24,12 @@
         android:layout_height="wrap_content">
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
+            app:tabMode="fixed"
+            app:tabInlineLabel="true"
             android:id="@+id/tabLayout"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
 

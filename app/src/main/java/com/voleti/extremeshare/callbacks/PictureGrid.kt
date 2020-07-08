@@ -17,7 +17,7 @@ import com.voleti.extremeshare.ui.dataModels.PictureContent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class PictureConfig:DynamicConfig(){
+class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
     override fun subLayoutManager(context: Context?): RecyclerView.LayoutManager = LinearLayoutManager(context)
 
     override fun subViewType(position: Int): Int = when(subData[position].viewType){
@@ -60,14 +60,15 @@ class PictureConfig:DynamicConfig(){
 
 
     override fun fetchData(lifecycleScope: CoroutineScope, context: Context?) {
-        lifecycleScope.launch {
 
+        lifecycleScope.launch {
             context?.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 arrayOf(MediaStore.Images.Media._ID,MediaStore.Images.Media.DATE_MODIFIED),
                 null,
                 null,
                 "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
             )?.apply {
+                tabName(count)
                 if (moveToNext()){
                     do {
                         val id = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,getLong(getColumnIndex(MediaStore.Images.Media._ID)).toString())

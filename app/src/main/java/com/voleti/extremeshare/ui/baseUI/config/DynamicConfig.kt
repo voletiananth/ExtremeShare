@@ -5,7 +5,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.voleti.extremeshare.ui.baseUI.BaseModelImpl
 
-abstract class DynamicConfig: BaseConfig() {
+abstract class DynamicConfig(block:(Int)->Unit): BaseConfig(block) {
     val subData = mutableListOf<BaseModelImpl>()
 
     fun  offerSubData(item:BaseModelImpl){

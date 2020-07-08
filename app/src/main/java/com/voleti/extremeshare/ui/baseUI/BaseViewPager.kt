@@ -17,27 +17,30 @@ class BaseViewPager(val config: BaseViewPagerConfig):Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewPager.adapter = object :FragmentStateAdapter(this){
-            override fun getItemCount(): Int {
-                return 1
-            }
-
-            override fun createFragment(position: Int): Fragment {
-                return config.createFragment(position)
-            }
-
-
-        }
-
-        TabLayoutMediator(tabLayout,viewPager){tab, position ->
-                        tab.icon = resources.getDrawable(config.tabIcons[position],null)
-                        tab.text = config.tabNames[position]
-            viewPager.setCurrentItem(tab.position,true)
-        }.attach()
-
-
 
         return inflater.inflate(R.layout.base_viewpager_explorer,container,false)
     }
+
+     override fun onActivityCreated(savedInstanceState: Bundle?) {
+         super.onActivityCreated(savedInstanceState)
+         viewPager.adapter = object :FragmentStateAdapter(this){
+             override fun getItemCount(): Int {
+                 return config.itemCount
+             }
+
+             override fun createFragment(position: Int): Fragment {
+                 return config.createFragment(position){ name,tabPosition ->
+                     tabLayout.getTabAt(tabPosition)?.text = name
+                 }
+             }
+
+
+         }
+
+         TabLayoutMediator(tabLayout,viewPager){tab, position ->
+             tab.icon = resources.getDrawable(config.tabIcons[position],null)
+             viewPager.setCurrentItem(tab.position,true)
+         }.attach()
+     }
 
 }

@@ -1,5 +1,6 @@
 package com.voleti.extremeshare.ui.baseUI
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,22 +21,20 @@ open class BaseFragment(private val config: BaseConfig):Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initComponents()
+
         return inflater.inflate(R.layout.base_fragment,container,false)
     }
 
-    var tabName = 0
-
-    fun getTabName(block:(tabName:String)->Unit){
-        block(tabName.toString())
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initComponents()
     }
 
-    fun build():BaseFragment{
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         config.fetchData(lifecycleScope,context)
-        return this
     }
-
-
 
 
 
