@@ -21,6 +21,7 @@
         <TextView
             app:layout_constraintEnd_toStartOf="@id/radioButton"
             android:layout_width="0dp"
+            android:textColor="@color/colorPrimary"
             android:gravity="center_vertical"
             android:text="@{header.header}"
             app:layout_constraintTop_toTopOf="@id/radioButton"

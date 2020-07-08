@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.text.format.DateUtils
-import android.util.Log
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,9 @@ import com.voleti.extremeshare.ui.baseUI.config.DynamicConfig
 import com.voleti.extremeshare.ui.dataModels.Header
 import com.voleti.extremeshare.ui.dataModels.PictureContent
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
     override fun subLayoutManager(context: Context?): RecyclerView.LayoutManager = LinearLayoutManager(context)
@@ -29,7 +30,8 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
 
 
     override fun subBind(viewDataBinding: ViewDataBinding, position: Int) {
-       viewDataBinding.setVariable(BR.header,subData[position] as Header)
+       if(subData[position].viewType== contentType)
+           viewDataBinding.setVariable(BR.header,subData[position] as Header)
     }
 
     override fun mainLayoutManager(context: Context?): RecyclerView.LayoutManager = GridLayoutManager(context,3).apply {
@@ -50,7 +52,7 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
     }
 
     override fun mainBind(viewDataBinding: ViewDataBinding, position: Int) {
-        when(subData[position].viewType){
+        when(mainData[position].viewType){
             contentType -> viewDataBinding.setVariable( BR.image , mainData[position] as PictureContent)
             headerType -> viewDataBinding.setVariable( BR.header , mainData[position] as Header)
         }
@@ -62,30 +64,42 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
 
     override fun fetchData(lifecycleScope: CoroutineScope, context: Context) {
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             context.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 arrayOf(MediaStore.Images.Media._ID,MediaStore.Images.Media.DATE_MODIFIED),
                 null,
                 null,
                 "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
             )?.apply {
-                tabName(this.count)
-
-                if (moveToFirst()){
-                    Log.i("voletiananth",columnNames.joinToString())
-                    do {
-
-                        val id = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,getLong(getColumnIndex(MediaStore.Images.Media._ID)).toString())
-
-                        val date =  DateUtils.formatDateTime(context,getLong(getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)),DateUtils.FORMAT_NO_MONTH_DAY)
-
-                        tempData.put(date, PictureContent(contentType,id))
-
-                    }while (moveToNext())
+                withContext(Dispatchers.Main){
+                    tabName(count)
                 }
+
+                if (moveToFirst()) do {
+
+                    val id = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,getLong(getColumnIndex(MediaStore.Images.Media._ID)).toString())
+
+                    val date =  DateUtils.formatDateTime(context,getLong(getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)),DateUtils.FORMAT_NO_MONTH_DAY)
+
+                    tempData.put(date, PictureContent(contentType,id))
+
+                }while (moveToNext())
 
                 close()
             }
+
+            withContext(Dispatchers.Default){
+                tempData.asMap().forEach {
+                    mainData.apply {
+                        add(Header(headerType,it.key))
+                        addAll(it.value)
+                    }
+                    subData.add(Header(contentType,it.key))
+
+                }
+            }
+
+
         }
     }
 
