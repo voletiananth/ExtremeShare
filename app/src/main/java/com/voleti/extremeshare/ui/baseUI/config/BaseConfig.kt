@@ -18,7 +18,7 @@ abstract class BaseConfig(val tabName:(Int)->Unit){
 
 
 
-    abstract fun fetchData(lifecycleScope: CoroutineScope,context: Context)
+    abstract fun fetchData(lifecycleScope: CoroutineScope,context: Context,dataSet:()->Unit)
 
 
     protected fun offerMainData(item:BaseModelImpl){

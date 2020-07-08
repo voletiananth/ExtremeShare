@@ -62,7 +62,7 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
     }
 
 
-    override fun fetchData(lifecycleScope: CoroutineScope, context: Context) {
+    override fun fetchData(lifecycleScope: CoroutineScope, context: Context,dataSet:()->Unit) {
 
         lifecycleScope.launch(Dispatchers.IO) {
             context.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -80,7 +80,7 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
                     val id = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,getLong(getColumnIndex(MediaStore.Images.Media._ID)).toString())
 
                     val date =  DateUtils.formatDateTime(context,getLong(getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)),DateUtils.FORMAT_NO_MONTH_DAY)
-
+                        //TODO("Change Date Format")
                     tempData.put(date, PictureContent(contentType,id))
 
                 }while (moveToNext())
@@ -97,6 +97,9 @@ class PictureGrid(block:(Int)->Unit):DynamicConfig(block){
                     subData.add(Header(contentType,it.key))
 
                 }
+            }
+            withContext(Dispatchers.Main){
+                dataSet()
             }
 
 

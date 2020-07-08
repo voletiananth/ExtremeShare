@@ -1,7 +1,6 @@
 package com.voleti.extremeshare.ui.baseUI
 
 import androidx.databinding.ViewDataBinding
-import com.voleti.extremeshare.ui.baseUI.config.BaseConfig
 import com.voleti.extremeshare.ui.baseUI.config.DynamicConfig
 
 

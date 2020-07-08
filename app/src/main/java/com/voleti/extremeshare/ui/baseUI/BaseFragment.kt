@@ -2,6 +2,7 @@ package com.voleti.extremeshare.ui.baseUI
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,11 @@ open class BaseFragment(private val config: BaseConfig):Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        config.fetchData(lifecycleScope,context)
+        config.fetchData(lifecycleScope,context){
+            baseRecycleView.adapter?.notifyDataSetChanged()
+            Log.i("voletiananth",baseRecycleView.adapter?.itemCount.toString())
+        }
+
     }
 
 
