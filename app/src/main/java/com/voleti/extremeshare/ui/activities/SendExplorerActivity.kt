@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.voleti.extremeshare.R
-import com.voleti.extremeshare.callbacks.PictureViewPager
-import com.voleti.extremeshare.ui.baseUI.BaseViewPager
+
 import kotlinx.android.synthetic.main.activity_send_explorer.*
 
-class SendExplorerActivity: AppCompatActivity(R.layout.activity_send_explorer) {
+class SendExplorerActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_send_explorer)
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener {
             finish()
@@ -24,7 +24,7 @@ class SendExplorerActivity: AppCompatActivity(R.layout.activity_send_explorer) {
             }
 
             override fun createFragment(position: Int): Fragment {
-                return BaseViewPager(PictureViewPager())
+                return Fragment()
             }
         }
 
