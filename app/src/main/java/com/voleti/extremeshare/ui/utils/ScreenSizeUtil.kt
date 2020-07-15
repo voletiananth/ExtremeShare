@@ -1,4 +1,4 @@
-package com.voleti.extremeshare.utils
+package com.voleti.extremeshare.ui.utils
 
 import androidx.fragment.app.Fragment
 import com.voleti.extremeshare.R

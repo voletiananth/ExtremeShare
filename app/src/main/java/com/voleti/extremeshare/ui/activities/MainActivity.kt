@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.voleti.extremeshare.R
-import com.voleti.extremeshare.dialog.RationalePermissionRequest
-import com.voleti.extremeshare.utils.AppUtils
+import com.voleti.extremeshare.ui.dialog.RationalePermissionRequest
+import com.voleti.extremeshare.ui.utils.AppUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 

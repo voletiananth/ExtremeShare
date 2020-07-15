@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.voleti.extremeshare.R
-import kotlinx.android.synthetic.main.fragment_content_sharing.*
+import kotlinx.android.synthetic.main.fragment_content_sharing.view.*
 
 class ContentSharing: Fragment() {
     override fun onCreateView(
@@ -15,16 +15,14 @@ class ContentSharing: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_content_sharing,container,false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        btnSend.setOnClickListener {
-
-            findNavController().navigate(R.id.action_contentSharing_to_sendExplorerActivity)
+        return inflater.inflate(R.layout.fragment_content_sharing,container,false).apply {
+            btnSend.setOnClickListener {
+                findNavController().navigate(R.id.action_contentSharing_to_sendExplorerActivity)
+            }
         }
     }
+
+
 
 
 }

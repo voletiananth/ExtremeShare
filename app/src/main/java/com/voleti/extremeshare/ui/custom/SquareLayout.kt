@@ -1,4 +1,4 @@
-package com.voleti.extremeshare.custom
+package com.voleti.extremeshare.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet

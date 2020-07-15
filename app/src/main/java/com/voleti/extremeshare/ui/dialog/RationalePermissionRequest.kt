@@ -1,4 +1,4 @@
-package com.voleti.extremeshare.dialog
+package com.voleti.extremeshare.ui.dialog
 
 import android.app.Activity
 import android.content.Context
@@ -12,16 +12,20 @@ import com.voleti.extremeshare.R
 import com.voleti.extremeshare.ui.activities.MainActivity.Companion.requestPermissionAll
 
 class RationalePermissionRequest
-                    private constructor(private val activity: Activity,private val permissionRequest: PermissionRequest,
+                    private constructor(private val activity: Activity, private val permissionRequest: PermissionRequest,
                                         private val killActivityOtherwise:Boolean) : AlertDialog.Builder(activity) {
 
 
     companion object{
-        fun requestIfNecessary(activity: Activity,permissionRequest: PermissionRequest,killActivityOtherwise:Boolean) :AlertDialog? =
+        fun requestIfNecessary(activity: Activity, permissionRequest: PermissionRequest, killActivityOtherwise:Boolean) :AlertDialog? =
             if (ActivityCompat.checkSelfPermission(activity, permissionRequest.permission) == PackageManager.PERMISSION_GRANTED)
                 null
             else
-              RationalePermissionRequest(activity,permissionRequest, killActivityOtherwise).show()
+              RationalePermissionRequest(
+                  activity,
+                  permissionRequest,
+                  killActivityOtherwise
+              ).show()
     }
 
     init {
