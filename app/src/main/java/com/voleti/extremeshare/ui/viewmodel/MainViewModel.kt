@@ -1,13 +1,19 @@
 package com.voleti.extremeshare.ui.viewmodel
 
-import androidx.lifecycle.MutableLiveData
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.voleti.extremeshare.data.MediaRepository
+import kotlinx.coroutines.launch
 
-class MainViewModel constructor(): ViewModel() {
-
-    val imageTimelineCount = MutableLiveData<Int>(0)
+class MainViewModel @ViewModelInject constructor(val mediaRepository: MediaRepository): ViewModel() {
 
 
+    init {
+        viewModelScope.apply {
+            launch { mediaRepository.pictureGrid.loadData() }
+        }
+    }
 
 
 }

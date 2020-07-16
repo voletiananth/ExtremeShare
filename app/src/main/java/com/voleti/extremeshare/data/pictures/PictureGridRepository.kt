@@ -1,35 +1,32 @@
-package com.voleti.extremeshare.data
+package com.voleti.extremeshare.data.pictures
 
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.MediaStore
 import com.google.common.collect.ArrayListMultimap
+import com.voleti.extremeshare.data.DynamicRepository
 import com.voleti.extremeshare.ui.base.BaseFragment
-import com.voleti.extremeshare.ui.model.ItemType
 import com.voleti.extremeshare.ui.model.PictureGrid
-import com.voleti.extremeshare.ui.model.PictureHeader
+import com.voleti.extremeshare.ui.model.PictureGridHeader
 import com.voleti.extremeshare.ui.utils.AppUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class LocalMedia @Inject constructor(private val contentResolver: ContentResolver) {
+class PictureGridRepository(contentResolver: ContentResolver): DynamicRepository(contentResolver) {
 
+    override val contentUri: Uri
+        get() = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    override val projection: Array<String>?
+        get() = arrayOf(MediaStore.Images.Media._ID,MediaStore.Images.Media.DATE_MODIFIED)
+    override val sortOrder: String?
+        get() = "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
 
-    private val dispatcherIo = Dispatchers.IO
-
-    suspend fun imagesTimeline():List<ItemType> {
-
+    override suspend fun loadData() {
+        var tempTabName = 0
         val temp = ArrayListMultimap.create<String, PictureGrid>()
         withContext(dispatcherIo){
-            contentResolver.query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATE_MODIFIED),
-                null,
-                null,
-                "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
-            )?.apply {
-
+           query()?.apply {
+               tempTabName = count
                 if (moveToFirst()){
                     val id = getColumnIndex(MediaStore.Images.Media._ID)
                     val dateModified = getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)
@@ -42,14 +39,21 @@ class LocalMedia @Inject constructor(private val contentResolver: ContentResolve
 
                 close()
             }
-
-        }
-        return  mutableListOf<ItemType>().apply {
+       }
+        withContext(Dispatchers.Default){
             temp.asMap().forEach{
-                add(PictureHeader(BaseFragment.headerType,it.key))
-                addAll(it.value)
+                tempBaseData.apply {
+                    add(PictureGridHeader(BaseFragment.headerType,it.key,tempDynamicData.size))
+                    tempDynamicData.add(PictureGridHeader(BaseFragment.contentType,it.key,tempBaseData.size-1))
+                    addAll(it.value)
+                }
+
             }
         }
-
+        submitTableName(tempTabName)
+        super.loadData()
     }
+
+
+
 }

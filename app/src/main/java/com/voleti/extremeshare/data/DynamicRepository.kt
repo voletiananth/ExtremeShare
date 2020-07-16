@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import com.voleti.extremeshare.ui.model.ItemType
 
 abstract class DynamicRepository(contentResolver: ContentResolver):BaseRepository(contentResolver) {
-
+    protected val tempDynamicData = mutableListOf<ItemType>()
     private val _dynamicData = MutableLiveData<List<ItemType>>()
     val dynamicData: LiveData<List<ItemType>> = _dynamicData
 
-
-    fun submitDynamicData(list:List<ItemType>){
-        _dynamicData.value = list
+    override suspend fun loadData() {
+        super.loadData()
+        _dynamicData.value = tempDynamicData
     }
 }

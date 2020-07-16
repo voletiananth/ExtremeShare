@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.voleti.extremeshare.R
+import com.voleti.extremeshare.ui.model.ItemType
 import kotlinx.android.synthetic.main.base_fragment.*
 
 
@@ -15,16 +16,18 @@ abstract class BaseFragment:Fragment(R.layout.base_fragment) {
      companion object {
          const val headerType = 0
          const val contentType = 1
+         const val emptyType = 2
      }
 
+    protected  val baseData = mutableListOf<ItemType>()
 
-     abstract fun baseItemCount():Int
+
      abstract fun baseBind(viewBinding: ViewDataBinding,position: Int)
      abstract fun baseViewType(position:Int):Int
 
 
 
-     open fun itemCount():Int = baseItemCount()
+     open fun itemCount():Int = baseData.size
      open fun bind(viewBinding: ViewDataBinding,position: Int){
          baseBind(viewBinding, position)
      }
@@ -57,29 +60,23 @@ abstract class BaseFragment:Fragment(R.layout.base_fragment) {
 
              }
 
-             layoutManager = mainLayoutManager
+             layoutManager = baseLayoutManager
          }
 
      }
 
 
-    abstract val mainLayoutManager:RecyclerView.LayoutManager
+    abstract val baseLayoutManager:RecyclerView.LayoutManager
 
 
      fun setManagerToDefault(){
-         baseRecycleView.layoutManager = mainLayoutManager
+         baseRecycleView.layoutManager = baseLayoutManager
      }
 
     protected fun changeLayoutManager(layoutManager: RecyclerView.LayoutManager){
          baseRecycleView.layoutManager = layoutManager
      }
 
-
-
-     override fun onDestroy() {
-         super.onDestroy()
-         baseRecycleView.adapter = null
-     }
 
     protected fun notifyDataChanged(){
         baseRecycleView.adapter?.notifyDataSetChanged()

@@ -7,12 +7,17 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.voleti.extremeshare.R
+import com.voleti.extremeshare.ui.fragments.pictures.PictureViewPager
 import com.voleti.extremeshare.ui.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_send_explorer.*
 
+
+@AndroidEntryPoint
 class  SendExplorerActivity: AppCompatActivity() {
 
     val viewModel by viewModels<MainViewModel>()
+
     private val tabNames = arrayOf("Photos","Files","Videos")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,20 +30,17 @@ class  SendExplorerActivity: AppCompatActivity() {
     }
 
     private fun initComponents(){
-
         viewPager.adapter = object :FragmentStateAdapter(this){
             override fun getItemCount(): Int {
-                return tabNames.size
+                return 1
             }
-
             override fun createFragment(position: Int): Fragment {
-                return Fragment()
+                return PictureViewPager()
             }
         }
         toolbar.setNavigationOnClickListener {
             finish()
         }
-
     }
 
 
